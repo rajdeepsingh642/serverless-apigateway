@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Serverless CRUD API
+
+Resources:
+  MyLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.create  # Replace with your Lambda handler function
+      Runtime: python3.8
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: YourTableName
+      Events:
+        CreateEvent:
+          Type: Api
+          Properties:
+            Path: /create
+            Method: POST
+        ReadEvent:
+          Type: Api
+          Properties:
+            Path: /read/{id}
+            Method: GET
+        UpdateEvent:
+          Type: Api
+          Properties:
+            Path: /update/{id}
+            Method: PUT
+        DeleteEvent:
+          Type: Api
+          Properties:
+            Path: /delete/{id}
+            Method: DELETE
